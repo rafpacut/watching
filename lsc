@@ -1,0 +1,21 @@
+#!/bin/bash
+
+lsc()
+{
+	for i in *
+	do
+		if [ -e $i/$USER.start ]; then
+			`echo "niedokonczyles : " $i \n` 
+		else
+			`echo -e $i \n`
+		fi
+	done
+	
+	for i in *
+	do
+		if [ -e $i/$USER.end ]; then
+		else
+			`echo -e $i \n`
+		fi
+	done
+}
