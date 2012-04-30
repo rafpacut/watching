@@ -2,9 +2,20 @@
 
 touch $USER.start
 
-for i in *
-do
-	mplayer $i
+while getopts ":v" args; do
+
+	if [ $args = 'v' ]; then
+		for i in *
+		do
+			vlc $i
+		done
+	else
+		for i in *
+		do
+			mplayer $i
+		done
+	fi
+
 done
 
 touch $USER.end
