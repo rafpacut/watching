@@ -5,16 +5,15 @@ lsc()
 	for i in *
 	do
 		if [ -e $i/$USER.start ]; then
-			echo -e "niedokonczyles : " $i \n
-		else
-			echo -e $i \n
+			echo  "niedokonczyles : " $i 
 		fi
 	done
 	
 	for i in *
 	do
 		if [ ! -e $i/$USER.end ]; then
-			echo -e $i \n
+			echo  $i 
 		fi
 	done
+	
 }
