@@ -2,24 +2,22 @@
 
 touch $USER.start
 
-while getopts ":v" args; do
+getopts ":v" args
 
-	if [ $args = 'v' ]; then
-		for i in *
-		do
-			if [ $i != *.start] &&[ $i != *.end ] ]
-				vlc $i
-			fi
-		done
-	else
-		for i in *
-		do
-			if [ $i != *.start] &&[ $i != *.end ] ]
-				mplayer $i
-			fi
-		done
-	fi
-
-done
+if [ $args = "v" ]; then
+	for i in * 
+	do
+		if [ ".start" < $i ]; then
+			vlc $i
+		fi
+	done
+else
+	for i in * 
+	do
+		if [ ".start" < $i ]; then
+			mplayer $i
+		fi
+	done
+fi
 
 touch $USER.end
