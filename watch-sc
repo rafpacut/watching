@@ -7,12 +7,16 @@ while getopts ":v" args; do
 	if [ $args = 'v' ]; then
 		for i in *
 		do
-			vlc $i
+			if [ $i != *.start] &&[ $i != *.end ] ]
+				vlc $i
+			fi
 		done
 	else
 		for i in *
 		do
-			mplayer $i
+			if [ $i != *.start] &&[ $i != *.end ] ]
+				mplayer $i
+			fi
 		done
 	fi
 
