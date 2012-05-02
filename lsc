@@ -8,7 +8,6 @@ if [ -e ".sc" ]; then
 	
 	for i in *
 	do
-	echo sth
 		if [ -e $i/$USER.start ] && [ ! -e $i/$USER.end ]; then
 			echo  "niedokonczyles : " $i 
 			
@@ -28,10 +27,12 @@ if [ -e ".sc" ]; then
 		fi
 	done
 else
-	for i in *
-	do
-		echo $i
-	done 
+#	for i in *
+#	do
+#		echo $i
+#	done 
+
+"ls"
 fi
 }
 
