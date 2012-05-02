@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 lsc()
 {
 	for i in *
@@ -16,4 +18,34 @@ lsc()
 		fi
 	done
 	
+}
+
+lsc2()
+{
+	old_color="01;34"
+	new_color="01;40"
+	`sed -i s/$old_color/$new_color/ ~/.dircolors`
+	for i in *
+	do
+		if [ -e $i/$USER.start ] && [ ! -e $i/$USER.end ]; then
+			echo $i
+		fi
+	done
+	exec bash
+	
+	old_color=$new_color
+	new_color="01;45"
+	
+	`sed -i s/$old_color/$new_color/ ~/.dircolors`
+	for i in *
+	do
+		if [ ! -e $i/$USER.end ]; then
+			echo $i	
+		fi
+	done
+	exec bash
+	
+	old_color=$new_color
+	new_color="01;34"
+	`sed -i s/$old_color/$new_color/ ~/.dircolors`
 }
