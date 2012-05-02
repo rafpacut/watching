@@ -9,6 +9,7 @@ if [ $args = "v" ]; then
 	do
 		if [ ".start" < $i ]; then
 			vlc $i
+			touch $i.$USER.watched
 		fi
 	done
 else
@@ -16,6 +17,7 @@ else
 	do
 		if [ ".start" < $i ]; then
 			mplayer $i
+			touch $i.$USER.watched
 		fi
 	done
 fi
