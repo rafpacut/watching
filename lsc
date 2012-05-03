@@ -36,33 +36,47 @@ else
 fi
 }
 
-lsc2()
+black='\E[30;34m'
+red='\E[31;34m'
+green='\E[32;34m'
+yellow='\E[33;34m'
+blue='\E[37;34m'
+magenta='\E[35;34m'
+cyan='\E[36;34m'
+white='\E[37;34m'
+
+cecho()
 {
-	old_color="01;34"
-	new_color="01;40"
-	`sed -i s/$old_color/$new_color/ ~/.dircolors`
+	message=${1:-$default_msg}
+	color=${2:-$black}
+	
+	echo -e "$color $message"
+	
+	return
+}
+
+
+clsc()
+{
+if [ -e ".sc" ]; then
+	
 	for i in *
 	do
 		if [ -e $i/$USER.start ] && [ ! -e $i/$USER.end ]; then
-			echo $i
-		fi	
+			cecho   $i $green
+		fi
 	done
-	exec bash
 	
-	
-	old_color=$new_color
-	new_color="01;45"
-	
-	`sed -i s/$old_color/$new_color/ ~/.dircolors`
 	for i in *
 	do
 		if [ ! -e $i/$USER.end ]; then
-			echo $i	
+			cecho  $i 
 		fi
 	done
-	exec bash
-	
-	old_color=$new_color
-	new_color="01;34"
-	`sed -i s/$old_color/$new_color/ ~/.dircolors`
+else
+
+"ls"
+fi
 }
+
+
