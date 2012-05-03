@@ -2,39 +2,6 @@
 
 
 
-lsc()
-{
-if [ -e ".sc" ]; then
-	
-	for i in *
-	do
-		if [ -e $i/$USER.start ] && [ ! -e $i/$USER.end ]; then
-			echo  "niedokonczyles : " $i 
-			
-			for d in $i/*
-			do
-				if [ ! -e $d.$USER.watched  ]; then
-					echo $d
-				fi
-			done
-		fi
-	done
-	
-	for i in *
-	do
-		if [ ! -e $i/$USER.end ]; then
-			echo  $i 
-		fi
-	done
-else
-#	for i in *
-#	do
-#		echo $i
-#	done 
-
-"ls"
-fi
-}
 
 black='\E[30;34m'
 red='\E[31;34m'
@@ -56,7 +23,7 @@ cecho()
 }
 
 
-clsc()
+lsc()
 {
 if [ -e ".sc" ]; then
 	
