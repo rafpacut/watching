@@ -3,14 +3,14 @@
 
 
 
-black='\E[30;34m'
-red='\E[31;34m'
-green='\E[32;34m'
-yellow='\E[33;34m'
-blue='\E[37;34m'
-magenta='\E[35;34m'
-cyan='\E[36;34m'
-white='\E[37;34m'
+black='\E[30;48m'
+red='\E[31;48m'
+green='\E[32;48m'
+yellow='\E[33;48m'
+blue='\E[37;48m'
+magenta='\E[35;48m'
+cyan='\E[36;48m'
+white='\E[37;48m'
 
 cecho()
 {
