@@ -41,8 +41,12 @@ if [ -e ".sc" ]; then
 		fi
 	done
 else
-
-"ls"
+	getopts ":l" agrs
+	if [ "$args" = 'l' ]; then
+		"ls -l"
+	else
+		"ls"
+	fi
 fi
 }
 
