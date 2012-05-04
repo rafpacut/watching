@@ -23,10 +23,9 @@ cecho()
 }
 
 
-lsc()
-{
+#lsc()
+#{
 if [ -e ".sc" ]; then
-	
 	for i in *
 	do
 		if [ -e $i/$USER.start ] && [ ! -e $i/$USER.end ]; then
@@ -41,13 +40,11 @@ if [ -e ".sc" ]; then
 		fi
 	done
 else
-	getopts ":l" agrs
-	if [ "$args" = 'l' ]; then
-		"ls -l"
+	getopts ":l" args
+	if [ "$args" = "l" ]; then
+		ls -l
 	else
-		"ls"
+		ls
 	fi
 fi
-}
-
-
+#}
