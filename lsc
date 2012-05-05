@@ -35,7 +35,7 @@ if [ -e ".sc" ]; then
 	
 	for i in *
 	do
-		if [ ! -e $i/$USER.end ] && [ ! -e $i/downloading ]; then
+		if [ ! -e $i/$USER.end ] && [ ! -e $i/downloading ] && [ ! -e $i/$USER.start ]; then
 			cecho  $i 
 		fi
 	done
