@@ -63,7 +63,7 @@ done;
 
 video_number=1
 
-#making downloading flag for clsc
+#making downloading flag for lsc
  touch $dir/downloading
 
 for line in $youtube_links;
@@ -79,4 +79,6 @@ do
 
     video_number=`expr $video_number + 1`
 done;
+#removing file flag for lsc
+	rm $dir/downloading
 
