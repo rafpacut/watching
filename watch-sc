@@ -1,28 +1,14 @@
 #!/bin/bash
 
-#touch $USER.start
+touch $USER.start
 
-getopts ":v" args
 
-if [ $args = "v" ]; then
 	for i in * 
 	do
-		if [ ".start" < "$i" ]; then
-			vlc $i
-			touch $i.$USER.watched
+		substring=`echo $i| cut -d'.' -f 2`
+		if  [ "$substring" != "start" ] && [ "$substring" != "end" ]; then
+			mplayer $i
 		fi
 	done
-else
-	for i in * 
-	do
-		if [ ".start" > "$i" ]; then
-			if [ ! -e "$i.$USER.watched" ]; then
-#				mplayer $i
-				echo $i
-#				touch $i.$USER.watched
-			fi
-		fi
-	done
-fi
 
-#touch $USER.end
+touch $USER.end
