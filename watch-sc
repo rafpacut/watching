@@ -1,14 +1,55 @@
 #!/bin/bash
 
-touch $USER.start
+index=0
+last=0	
 
+# First case: we have started the series and last video number is stored in $USER.start 
 
-	for i in * 
+if [ -e $USER.start ]; then
+	
+	last=`cat $USER.start`
+	for i in *
 	do
 		substring=`echo $i| cut -d'.' -f 2`
 		if  [ "$substring" != "start" ] && [ "$substring" != "end" ]; then
-			mplayer $i
+			if [ "$index" -ge "$last" ]; then
+					array[index]=$i
+			fi
+			let index=index+1
+		fi
+	done	
+	
+else
+
+# Second case: we havent started the series
+
+	for i in *
+	do
+		substring=`echo $i| cut -d'.' -f 2`
+		if  [ "$substring" != "start" ] && [ "$substring" != "end" ]; then
+			array[index]=$i
+			let index=index+1
 		fi
 	done
 
-touch $USER.end
+fi
+
+touch $USER.start
+
+last_element="${#array[@]}"
+current_element=1
+for i in ${array[@]} 
+do
+	mplayer $i
+	echo "$current_element" > $USER.start
+	if [ "$current_element" = "$last_element" ]; then # if we havent watched all the videos
+		touch $USER.end
+	fi
+	let current=current+1
+done
+
+
+
+
+
+
