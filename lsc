@@ -23,8 +23,6 @@ cecho()
 }
 
 
-#lsc()
-#{
 if [ -e ".sc" ]; then
 	for i in *
 	do
@@ -58,4 +56,3 @@ else
 		fi
 	fi
 fi
-#}
