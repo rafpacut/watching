@@ -37,15 +37,15 @@ fi
 touch $USER.start
 
 last_element="${#array[@]}"
-current_element=1
+let current_element="$last+1"
 for i in ${array[@]} 
 do
-	mplayer $i
 	echo "$current_element" > $USER.start
-	if [ "$current_element" = "$last_element" ]; then # if we havent watched all the videos
+	mplayer $i
+	if [ "$current_element" = "$last_element" ]; then # if we have watched all the videos
 		touch $USER.end
 	fi
-	let current=current+1
+	let current_element=$current_element+1
 done
 
 
