@@ -11,7 +11,7 @@ if [ -e $USER.start ]; then
 	for i in *
 	do
 		substring=`echo $i| cut -d'.' -f 2`
-		if  [ "$substring" != "start" ] && [ "$substring" != "end" ]; then
+		if  [ "$substring" != "start" ] && [ "$substring" != "end" ]; then # excluding other users .end || .start files
 			if [ "$index" -ge "$last" ]; then
 					array[index]=$i
 			fi
@@ -35,17 +35,19 @@ else
 fi
 
 touch $USER.start
+echo "0" > $USER.start # preventing crash when not watching whole first video
 
 last_element="${#array[@]}"
-let current_element="$last+1"
+let current_element=$last+1
 for i in ${array[@]} 
 do
+	mplayer -msglevel all=0 $i
 	echo "$current_element" > $USER.start
-	mplayer $i
+	let current_element=$current_element+1
+	echo "$current_element = $last_element"
 	if [ "$current_element" = "$last_element" ]; then # if we have watched all the videos
 		touch $USER.end
 	fi
-	let current_element=$current_element+1
 done
 
 
