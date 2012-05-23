@@ -38,7 +38,7 @@ touch $USER.start
 echo "0" > $USER.start # preventing crash when not watching whole first video
 
 last_element="${#array[@]}"
-let current_element=$last+1
+let current_element=$last+2
 for i in ${array[@]} 
 do
 	mplayer -msglevel all=0 $i
