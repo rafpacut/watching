@@ -13,7 +13,7 @@ then
     echo "Downloading video(s) in 720p."
 elif [ $quality == "480p" ]
 then
-    quality_fmt=18
+    quality_fmt=35
     echo "Downloading video(s) in 480p"
 else
     echo "Unknown video format defined in config file."
