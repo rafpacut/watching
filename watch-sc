@@ -1,7 +1,8 @@
 #!/bin/bash
 
 index=0
-last=0	
+last=0
+debug = true
 
 # First case: we have started the series and last video number is stored in $USER.start 
 
@@ -37,15 +38,26 @@ fi
 touch $USER.start
 echo "0" > $USER.start # preventing crash when not watching whole first video
 
+if [ debug ]; then
+    echo ${array[@]}
+fi
+
 last_element="${#array[@]}"
-let current_element=$last+2
+let current_element=$last
+
+if [ debug ]; then
+    echo '$last element':" $last_element" '$current element':" $current_element "
+fi
+
 for i in ${array[@]} 
 do
+        if [ debug ]; then
+            echo '$current element':" $current_element ," '$last element': "$last_element "
+        fi
 	mplayer -msglevel all=0 $i
 	echo "$current_element" > $USER.start
 	let current_element=$current_element+1
-	echo "$current_element = $last_element"
-	if [ "$current_element" = "$last_element" ]; then # if we have watched all the videos
+	if [ "$current_element" -ge  "$last_element" ]; then # if we have watched all the videos
 		touch $USER.end
 	fi
 done
