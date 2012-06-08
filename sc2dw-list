@@ -13,22 +13,15 @@ then
     echo "Downloading video(s) in 720p."
 elif [ $quality == "480p" ]
 then
-    quality_fmt=35
+    quality_fmt=18
     echo "Downloading video(s) in 480p"
 else
     echo "Unknown video format defined in config file."
     exit
 fi
 
-if test -z "$1"
-then
-    echo "Please supply sc2casts.com url as parameter."
-    exit
-fi
-
 # making directory name from URL by dropping couple first characters
-cut_url=`echo $1 | sed 's/http\:\/\/sc2casts.com\/cast[0-9]*-\([^-]*-vs-[^-]*\)*/\1/'`
-dir="${cut_url}_${quality}"
+dir="."
 
 if [ $dir == $1 ]
 then
@@ -46,9 +39,7 @@ then
 fi
 
 
-# capturing all youtube links (finishing at question mark), dropping redundant links (2 at each video at current state)
-
-youtube_links=`wget $1 --quiet -O - | grep -o "http://www.youtube.com[^?]*" | uniq`
+youtube_links=`cat list.txt`
 
 # creating empty files (scaffolds) v1.mp4, ..., vN.mp4 for `vlc *` purposes
 
