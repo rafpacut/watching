@@ -1,0 +1,11 @@
+#!/bin/bash
+
+directory=`ls -c | head -n 1` # default, to change
+echo $directory
+echo ":"
+while true; do
+    echo `ls $directory -l | cut -c 28-36 | grep -v " 0" | tail -n 1`
+    sleep 1
+done;
+
+
