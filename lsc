@@ -45,14 +45,6 @@ if [ -e ".sc" ]; then
 		fi
 	done
 else
-	getopts ":la" args
-	if [ "$args" = "l" ]; then
-		ls -l
-	else
-		if [ $args = "a" ]; then
-			ls -a
-		else
-			ls
-		fi
-	fi
+	arg=$1
+	ls $arg
 fi

@@ -2,7 +2,7 @@
 
 index=0
 last=0
-debug = true
+debug=true
 
 # First case: we have started the series and last video number is stored in $USER.start 
 
@@ -54,7 +54,9 @@ do
         if [ debug ]; then
             echo '$current element':" $current_element ," '$last element': "$last_element "
         fi
-	mplayer -msglevel all=0 $i
+#	mplayer -fs -msglevel all=0 $i
+#	becouse in my .bashrc mplayer="mplayer -fs -msglevel all=0"
+	mplayer $i
 	echo "$current_element" > $USER.start
 	let current_element=$current_element+1
 	if [ "$current_element" -ge  "$last_element" ]; then # if we have watched all the videos
