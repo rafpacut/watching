@@ -1,0 +1,49 @@
+#!/bin/bash
+
+index=0
+last=0
+name=$1
+dir="`pwd`/$name"
+
+#geting video series status from database:
+line=`grep -n $name database`
+var=`echo $line | cut -c -3 | cut -c 3-`
+number_of_line_in_database=`echo $line | cut -c -1`
+
+#first case: we havent started the series
+if [ $var = "n" ]; then
+	for i in $dir
+	do
+		array[index]=$i
+		let index=index+1
+	done
+	last_video=0
+fi
+
+#second case: we have started the series
+if [ $var = "s" ]; then
+	last_video=`echo $line | cut -c -3 | cut -c 2-`
+	for i in $dir
+	do
+		if [ $index -ge $last_video ]; then
+			array[index]=$i
+			let index=index+1
+		fi
+	done
+fi
+
+current_element=$last_video
+last_element="${#array[@]}"
+for i in $array[@]}
+do
+	mplayer $i
+	let current_element=current_element+1
+	if [ "$current_element" -ge "$last_element" ]; then
+		sed -i '$number_of_line_in_database s/s_*/e__/ database'
+	fi
+done
+
+
+
+
+

@@ -1,0 +1,50 @@
+#!/bin/bash
+
+black='\E[30;48m'
+red='\E[31;48m'
+green='\E[32;48m'
+yellow='\E[33;48m'
+blue='\E[37;48m'
+magenta='\E[35;48m'
+cyan='\E[36;48m'
+white='\E[37;48m'
+
+cecho()
+{
+	message=${1:-$default_msg}
+	color=${2:-$black}
+	
+	echo -e "$color $message"
+	
+	return
+}
+
+#line=`grep name1 database`
+#var=`echo $line | cut -c -1`
+#	index=`echo $line | cut -c -3 | cut -c 2-`
+for i in *
+do
+	line=`grep $i database`
+	var=`echo $line | cut -c -1`
+	if [ $var = "s" ]; then
+		cecho $i $green
+	fi
+done
+var=""
+for i in *
+do
+	line=`grep $i database`
+	var=`echo $line | cut -c -1`
+	if [ $var = "n" ]; then
+		cecho $i $black
+	fi
+done
+var=""
+for i in *
+do
+	line=`grep $i database`
+	var=`echo $line | cut -c -1`
+	if [ $var = "d" ]; then
+		cecho $i $red
+	fi
+done
