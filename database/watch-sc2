@@ -1,8 +1,14 @@
 #!/bin/bash
 
+#declaring essential variables
 index=0
 last=0
 name=$1
+
+#deleting "/" mark from name to fit database records
+let name_length=${#name}-1
+name=`echo $name | cut -c -$name_length`
+
 dir="`pwd`/$name"
 
 #geting video series status from database:
@@ -12,7 +18,7 @@ number_of_line_in_database=`echo $line | cut -c -1`
 
 #first case: we havent started the series
 if [ $var = "n" ]; then
-	for i in $dir
+	for i in $dir/*
 	do
 		array[index]=$i
 		let index=index+1
@@ -22,24 +28,34 @@ fi
 
 #second case: we have started the series
 if [ $var = "s" ]; then
-	last_video=`echo $line | cut -c -3 | cut -c 2-`
-	for i in $dir
+	last_video=`echo $line | cut -c $name_length- | cut -c -1`
+	for i in $dir/*
 	do
 		if [ $index -ge $last_video ]; then
 			array[index]=$i
-			let index=index+1
 		fi
+	let index=index+1
 	done
 fi
 
 current_element=$last_video
-last_element="${#array[@]}"
-for i in $array[@]}
+last_element=$index
+
+#just to anable line 53
+sed -i "$number_of_line_in_database s/n__/s_0/" database
+
+#Actual video playing
+for i in ${array[@]}
 do
-	mplayer $i
+#	mplayer $i
+	echo $i
+#zmien status na s_$current_element
+	sed -i "$number_of_line_in_database s/s_[0-9]/s_$current_element/" database
 	let current_element=current_element+1
 	if [ "$current_element" -ge "$last_element" ]; then
-		sed -i '$number_of_line_in_database s/s_*/e__/ database'
+	nun=1
+		sed -i "$number_of_line_in_database s/s_[0-9]/e__/" database
+#zmien status na e__
 	fi
 done
 
