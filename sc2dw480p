@@ -1,0 +1,84 @@
+#!/bin/bash
+
+quality="480p"
+debug_only=false
+
+# v1.mp4, v2.mp4, ...
+video_filename_prefix="v"
+video_extension="mp4"
+
+if [ $quality == "720p" ]
+then
+    quality_fmt=22
+    echo "Downloading video(s) in 720p."
+elif [ $quality == "480p" ]
+then
+    quality_fmt=35
+    echo "Downloading video(s) in 480p"
+else
+    echo "Unknown video format defined in config file."
+    exit
+fi
+
+if test -z "$1"
+then
+    echo "Please supply sc2casts.com url as parameter."
+    exit
+fi
+
+# making directory name from URL by dropping couple first characters
+cut_url=`echo $1 | sed 's/http\:\/\/sc2casts.com\/cast[0-9]*-\([^-]*-vs-[^-]*\)*/\1/'`
+dir="${cut_url}_${quality}"
+
+if [ $dir == $1 ]
+then
+    echo "Bad URL. Missed letters from the beginning of URL?"
+    exit
+fi
+
+if [ -d "$dir" ]; then
+    echo "Directory $dir already exists! You might have downloaded these videos in this quality. Continue?"
+fi
+
+if [ $debug_only == false ]
+then
+    mkdir $dir
+fi
+
+
+# capturing all youtube links (finishing at question mark), dropping redundant links (2 at each video at current state)
+
+youtube_links=`wget $1 --quiet -O - | grep -o "http://www.youtube.com[^?]*" | uniq`
+
+# creating empty files (scaffolds) v1.mp4, ..., vN.mp4 for `vlc *` purposes
+
+video_number_touch=1
+for line in $youtube_links;
+do
+    touch $dir/$video_filename_prefix$video_number_touch.$video_extension
+    video_number_touch=`expr $video_number_touch + 1`
+done;
+
+# downloading videos using youtube-dl
+
+video_number=1
+
+#making downloading flag for lsc
+ touch $dir/downloading
+
+for line in $youtube_links;
+do
+    output_path=$dir/$video_filename_prefix$video_number.$video_extension
+
+    echo "Downloading file: $output_path"
+
+    if [ $debug_only == false ]
+    then
+	/home/maciek/watching/youtube-dl --no-part --continue -o $output_path -f $quality_fmt $line
+    fi
+
+    video_number=`expr $video_number + 1`
+done;
+#removing file flag for lsc
+	rm $dir/downloading
+
